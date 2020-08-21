@@ -10,7 +10,7 @@ const authors = [
 	},
 	{
 		name: 'Charles Dickens',
-		nationality: 'US',
+		nationality: 'UK',
 		books: ['Oliver Twist, A Christmas Carol'],
 	},
 	{
@@ -27,70 +27,33 @@ app.get('/', (req, res) => {
 	res.send('Authors API');
 });
 
-//** /authors/id/ */
+//** /authors/:id/ */
 
-app.get('/authors/1/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[0].name}, ${authors[0].nationality}`);
-	res.json({
-		name: `${authors[0].name}`,
-		nationality: `${authors[0].nationality}`,
-	});
-});
-app.get('/authors/2/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[1].name}, ${authors[1].nationality}`);
-	res.json({
-		name: `${authors[1].name}`,
-		nationality: `${authors[1].nationality}`,
-	});
-});
-app.get('/authors/3/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[2].name}, ${authors[2].nationality}`);
-	res.json({
-		name: `${authors[2].name}`,
-		nationality: `${authors[2].nationality}`,
-	});
-});
-app.get('/authors/4/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[3].name}, ${authors[3].nationality}`);
-	res.json({
-		name: `${authors[3].name}`,
-		nationality: `${authors[3].nationality}`,
-	});
+app.get('/authors/:id', (req, res) => {
+	const id = req.params.id;
+	const index = Number(id) - 1;
+	if (id > 0 && id < 5) {
+		// res.send(`${authors[index].name}, ${authors[index].nationality}`);
+		res.json({
+			name: `${authors[index].name}`,
+			nationality: `${authors[index].nationality}`,
+		});
+		return;
+	}
+	res.send(`page with id of author ${id} not found`);
 });
 
-//** /authors/id/books */
+//** /authors/:id/books */
 
-app.get('/authors/1/books/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[0].books.join()}`);
-	res.json({ books: `${authors[0].books}` });
-});
-app.get('/authors/2/books/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[1].books.join()}`);
-	res.json({ books: `${authors[1].books}` });
-});
-app.get('/authors/3/books/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[2].books.join()}`);
-	res.json({ books: `${authors[2].books}` });
-});
-app.get('/authors/4/books/', (req, res) => {
-	console.log('server has started');
-	// res.send(`${authors[3].books.join()}`);
-	res.json({ books: `${authors[3].books}` });
-});
-
-//** all the other routes */
-
-app.get('*', (req, res) => {
-	res.send(
-		'<h1>SORRY, PAGE NOT FOUND</h1>, <a href="/">please go back to home page</a> '
-	);
+app.get('/authors/:id/books', (req, res) => {
+	const id = req.params.id;
+	const index = Number(id) - 1;
+	if (id > 0 && id < 5) {
+		// res.send(`${authors[index].books}`);
+		res.json({ books: `${authors[index].books}` });
+		return;
+	}
+	res.send(`books of author with an id ${id} not found`);
 });
 
 //**  start the server  */
